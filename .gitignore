@@ -1,0 +1,22 @@
+# --- OS files ---
+.DS_Store
+Thumbs.db
+
+# --- IDE/Editor ---
+.vscode/
+
+# --- Security & Config ---
+# !機密情報 環境変数
+CONFIG/
+
+# --- Application ---
+# Apacheの制御ファイル
+www/next/.htaccess
+
+# --- Logs & Temp ---
+*.log
+
+# --- Database & Migration ---
+www/data/
+
+.htaccess
