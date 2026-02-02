@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once __DIR__ . '/../../config/config.php';
 
 // Set header to indicate response is not a webpage
 header('Content-Type: application/json');

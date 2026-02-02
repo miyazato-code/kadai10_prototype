@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../CONFIG/config.php';
+require_once __DIR__ . '/../../config/config.php';
 
 $referral_code = htmlspecialchars($_POST['ref'] ?? '');
 $industry = htmlspecialchars($_POST['industry'] ?? '');

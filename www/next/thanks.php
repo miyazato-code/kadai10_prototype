@@ -3,7 +3,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 // 【修正1】パスを絶対パス指定にして読み込みミスを防ぐ
-require_once __DIR__ . '/../../CONFIG/config.php';
+require_once __DIR__ . '/../../config/config.php';
 
 $referral_code = htmlspecialchars($_GET['ref'] ?? '');
 

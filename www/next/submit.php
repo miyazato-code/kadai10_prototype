@@ -3,7 +3,7 @@
 
 
 // パスを project/CONFIG/config.php に合わせる
-require_once __DIR__ . '/../../CONFIG/config.php';
+require_once __DIR__ . '/../../config/config.php';
 
 $db = get_db_connection();
 
