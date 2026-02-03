@@ -70,12 +70,13 @@ $referral_count = $ref_stmt->fetchColumn();
 
 // ランク計算
 $rank_query = $db->prepare("
-    SELECT COUNT(*) + 1 as rank FROM signups s 
+    SELECT COUNT(*) + 1 as user_rank FROM signups s 
     LEFT JOIN (SELECT referrer_id, COUNT(*) as ref_count FROM referrals GROUP BY referrer_id) r ON s.id = r.referrer_id 
     WHERE (COALESCE(r.ref_count, 0) > ? OR (COALESCE(r.ref_count, 0) = ? AND s.created_at < ?))
 ");
 $rank_query->execute([$referral_count, $referral_count, $user['created_at']]);
-$user_rank = $rank_query->fetchColumn();
+$user_rank_data = $rank_query->fetch(PDO::FETCH_ASSOC);
+$user_rank = $user_rank_data['user_rank']
 
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
 $host = $_SERVER['HTTP_HOST'];

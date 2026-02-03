@@ -1,17 +1,20 @@
 <?php
-// 1. データベース接続
-$db = new PDO('sqlite:leads.db');
+$db = get_db_connection();
+$referral_code = $_GET['ref'] ?? '';
 
-// 2. 紹介IDの取得
-$referral_id = $_GET['ref'] ?? '';
+if ($referral_code) {
+    // 1. まずその紹介コードが存在するか確認
+    $stmt = $db->prepare("SELECT id FROM signups WHERE referral_code = ?");
+    $stmt->execute([$referral_code]);
+    $referrer = $stmt->fetch();
 
-if ($referral_id) {
-    // 3. 紹介者の referral_count をインクリメント
-    $stmt = $db->prepare("UPDATE leads SET referral_count = referral_count + 1 WHERE referral_id = ?");
-    $stmt->execute([$referral_id]);
+    if ($referrer) {
+        // index.php へのリダイレクト時に ref を引き継ぐことで、
+        // signup 時の referred_by 登録を確実にする
+        header('Location: index.php?ref=' . urlencode($referral_code));
+        exit;
+    }
 }
 
-// 4. ランディングページへリダイレクト
-header('Location: index.html');
+header('Location: index.php');
 exit;
-?>
