@@ -43,15 +43,36 @@ if (empty($user['industry'])) {
     </head>
     <body class="antialiased flex items-center justify-center min-h-screen">
         <div class="max-w-md mx-auto p-8 bg-white/5 border border-white/10 rounded-2xl">
-            <h1 class="text-2xl font-bold mb-4 text-center">なぜ今、登録しましたか？</h1>
+            <h1 class="text-2xl font-bold mb-4 text-center">どの業界ですか？</h1>
             <form action="update_industry.php" method="POST">
                 <input type="hidden" name="ref" value="<?php echo $referral_code; ?>">
                 <select name="industry" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl mb-4 text-white" required>
                     <option value="" class="text-black">選択してください</option>
-                    <option value="ecommerce" class="text-black">Eコマース</option>
-                    <option value="saas" class="text-black">SaaS</option>
-                    <option value="finance" class="text-black">金融</option>
-                    <option value="other" class="text-black">その他</option>
+                    <optgroup label="製造業" class="text-black">
+                        <option value="food" class="text-black">食料品（飲料、タバコ、飼料を含む）</option>
+                        <option value="textile" class="text-black">繊維</option>
+                        <option value="wood_paper" class="text-black">木材・紙パルプ（家具を含む）</option>
+                        <option value="chemical" class="text-black">化学</option>
+                        <option value="petroleum_coal" class="text-black">石油・石炭製品</option>
+                        <option value="ceramics_stone" class="text-black">窯業・土石製品（ガラス、セメント等）</option>
+                        <option value="steel" class="text-black">鉄鋼</option>
+                        <option value="non_ferrous" class="text-black">非鉄金属</option>
+                        <option value="metal_products" class="text-black">金属製品</option>
+                        <option value="machinery" class="text-black">機械（はん用・生産用・業務用、電気機械、輸送用、精密機械などを含む）</option>
+                    </optgroup>
+                    <optgroup label="非製造業" class="text-black">
+                        <option value="construction" class="text-black">建設</option>
+                        <option value="real_estate" class="text-black">不動産</option>
+                        <option value="rental" class="text-black">物品賃貸</option>
+                        <option value="wholesale" class="text-black">卸売</option>
+                        <option value="retail" class="text-black">小売</option>
+                        <option value="transport_post" class="text-black">運輸・郵便</option>
+                        <option value="information_communication" class="text-black">情報通信</option>
+                        <option value="electricity_gas" class="text-black">電気・ガス</option>
+                        <option value="business_services" class="text-black">対事業所サービス（広告、情報サービス、廃棄物処理等）</option>
+                        <option value="personal_services" class="text-black">対個人サービス（宿泊、飲食、娯楽等）</option>
+                        <option value="other_non_manufacturing" class="text-black">その他非製造業（農林水産、鉱業等を含む）</option>
+                    </optgroup>
                 </select>
                 <button type="submit" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700">送信</button>
             </form>
@@ -130,13 +151,16 @@ $referral_link = "{$protocol}://{$host}{$current_dir}/index.php?ref={$referral_c
             </a>
         </div>
     </section>
-    <script>
-        function copyLink() {
-            const el = document.getElementById('referral-link');
-            el.select();
-            document.execCommand('copy');
-            alert("Copied!");
-        }
-    </script>
+        <script>
+            async function copyLink() {
+                const el = document.getElementById('referral-link');
+                try {
+                    await navigator.clipboard.writeText(el.value);
+                    alert("Copied!");
+                } catch (err) {
+                    console.error('Failed to copy: ', err);
+                }
+            }
+        </script>
 </body>
 </html>
